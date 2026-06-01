@@ -164,6 +164,23 @@ body {
   gap: 6px; /* Exactly 6px vertical spacing between lines */
 }
 
+#card-domain-watermark {
+  position: absolute;
+  bottom: 104px; /* Placed exactly above the profile capsule (63px + ~36px height + 5px gap) */
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  font-family: var(--font);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 100;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
 #btn-floating-profile {
   position: absolute;
   bottom: 63px; /* Normal display position (raised by 20px) */

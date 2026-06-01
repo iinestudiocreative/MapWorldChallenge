@@ -3489,11 +3489,15 @@ function setupEvents() {
     const header = document.getElementById("card-header");
     const legend = document.getElementById("card-legend");
     
+    const domainWatermark = document.getElementById("card-domain-watermark");
+    
     // Save current styles
     const savedCardWidth = card.style.width;
     const savedSvgTransform = mapSvg.style.transform;
     const savedBtnBottom = floatingBtn ? floatingBtn.style.bottom : null;
     const savedBtnTransform = floatingBtn ? floatingBtn.style.transform : null;
+    const savedDomainBottom = domainWatermark ? domainWatermark.style.bottom : null;
+    const savedDomainTransform = domainWatermark ? domainWatermark.style.transform : null;
     const savedHeaderPaddingTop = header ? header.style.paddingTop : null;
     const savedLegendPaddingBottom = legend ? legend.style.paddingBottom : null;
     
@@ -3507,6 +3511,10 @@ function setupEvents() {
     if (floatingBtn) {
       floatingBtn.style.bottom = "77px";
       floatingBtn.style.transform = "translateX(-50%) scale(1.5)";
+    }
+    if (domainWatermark) {
+      domainWatermark.style.bottom = "128px";
+      domainWatermark.style.transform = "translateX(-50%) scale(1.5)";
     }
     if (header) {
       header.style.paddingTop = "75px";
@@ -3527,6 +3535,10 @@ function setupEvents() {
       if (floatingBtn) {
         floatingBtn.style.bottom = savedBtnBottom;
         floatingBtn.style.transform = savedBtnTransform;
+      }
+      if (domainWatermark) {
+        domainWatermark.style.bottom = savedDomainBottom;
+        domainWatermark.style.transform = savedDomainTransform;
       }
       if (header) {
         header.style.paddingTop = savedHeaderPaddingTop;
