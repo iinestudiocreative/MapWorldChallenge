@@ -3516,7 +3516,7 @@ function setupEvents() {
     }
     if (domainWatermark) {
       domainWatermark.style.bottom = "128px";
-      domainWatermark.style.transform = "translateX(-50%) scale(1.5)";
+      domainWatermark.style.transform = "scale(1.5)";
     }
     if (header) {
       header.style.paddingTop = "75px";
