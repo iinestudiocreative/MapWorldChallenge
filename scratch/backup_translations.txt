@@ -1,0 +1,359 @@
+const UI_TRANSLATIONS = {
+  en: {
+    subtitle: "How much of Japan have you explored?",
+    subtitleWorld: "How much of the World have you explored?",
+    subtitleFrance: "How much of France have you explored?",
+    subtitleSpain: "How much of Spain have you explored?",
+    exportBtn: '<i class="fa fa-download"></i> Export',
+    legend: ["Lived", "Stayed", "Visited", "Alighted", "Passed", "Never"],
+    insetLabel: "INSET",
+    explored: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">has explored </span><strong style="color:#ffffff;">${count} regions</strong></span></div>`,
+    exploredWorld: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">has explored </span><strong style="color:#ffffff;">${count} countries</strong></span></div>`,
+    exploredFrance: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">has explored </span><strong style="color:#ffffff;">${count} departments</strong></span></div>`,
+    exploredSpain: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">has explored </span><strong style="color:#ffffff;">${count} provinces</strong></span></div>`,
+    modal: {
+      title: "Export Your Map!",
+      desc: "This application is <strong>100% free</strong>!<br>A simple follow on Instagram helps me<br>tremendously to continue this adventure.<br>🏍️🇯🇵 <strong>Thank you for your support!</strong>",
+      follow: `<i class="fa-brands fa-instagram"></i> Follow @french_rider_in_japan`,
+      dlAnyway: "Download anyway",
+      dlShared: "I followed! Download in HD 🎉"
+    },
+    levelModal: {
+      subtitle: "What is your exploration level?",
+      l5: { main: "Lived there", sub: "I lived there (+5 pts)" },
+      l4: { main: "Stayed there", sub: "Stayed ≥ 1 night (+4 pts)" },
+      l3: { main: "Visited there", sub: "Day trip (+3 pts)" },
+      l2: { main: "Alighted there", sub: "Stopover / Transit (+2 pts)" },
+      l1: { main: "Passed there", sub: "Just passing through (+1 pt)" },
+      l0: { main: "Never been", sub: "Never been (0 pt)" }
+    },
+    countryModal: {
+      title: "Choose a country",
+      world: "🌍 World", fr: "🇫🇷 France", it: "🇮🇹 Italy", es: "🇪🇸 Spain", jp: "🇯🇵 Japan", us: "🇺🇸 USA",
+      avail: "Available", soon: "Coming soon"
+    },
+    langModalTitle: "Choose language",
+    tapName: "👉 Tap your name",
+    bgWatermark: "JAPAN",
+    bgWatermarkWorld: "WORLD",
+    bgWatermarkFrance: "FRANCE",
+    bgWatermarkSpain: "SPAIN",
+    tutorial: {
+      title: "Welcome! 🌍",
+      subtitle: "How to use the app",
+      step1Title: "Zoom & Pan",
+      step1Desc: "Pinch with 2 fingers or use mouse scroll to navigate the map.",
+      step2Title: "Select Status",
+      step2Desc: "Click on a region or department to record your exploration level.",
+      step3Title: "Export & Share",
+      step3Desc: "Click the export button to download a beautiful map ready for social networks!",
+      closeBtn: "Let's go!"
+    }
+  },
+  ja: {
+    subtitle: "日本のどこを旅しましたか？",
+    subtitleWorld: "世界のどこを旅しましたか？",
+    subtitleFrance: "フランスのどこを旅しましたか？",
+    subtitleSpain: "スペインのどこを旅しましたか？",
+    exportBtn: '<i class="fa fa-download"></i> 書き出し',
+    legend: ["住んだ", "泊まった", "訪れた", "立ち寄り", "通過", "未踏"],
+    insetLabel: "拡大図",
+    explored: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">は </span><strong style="color:#ffffff;">${count} 地域</strong><span style="opacity:0.7; font-weight:400;">を探索しました</span></span></div>`,
+    exploredWorld: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">は </span><strong style="color:#ffffff;">${count} ヶ国</strong><span style="opacity:0.7; font-weight:400;">を探索しました</span></span></div>`,
+    exploredFrance: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">は </span><strong style="color:#ffffff;">${count} 県</strong><span style="opacity:0.7; font-weight:400;">を探索しました</span></span></div>`,
+    exploredSpain: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">は </span><strong style="color:#ffffff;">${count} 県</strong><span style="opacity:0.7; font-weight:400;">を探索しました</span></span></div>`,
+    modal: {
+      title: "マップを書き出す！",
+      desc: "このアプリは<strong>100%無料</strong>です！<br>Instagramをフォローして応援していただけると<br>旅の励みになります。よろしくお願いします！🏍️🇯🇵",
+      follow: `<i class="fa-brands fa-instagram"></i> @french_rider_in_japan をフォロー`,
+      dlAnyway: "そのままダウンロードする",
+      dlShared: "フォローしました！HD版を保存 🎉"
+    },
+    levelModal: {
+      subtitle: "訪問レベルを選択してください",
+      l5: { main: "住んだ", sub: "住んだことがある (+5 pts)" },
+      l4: { main: "泊まった", sub: "1泊以上した (+4 pts)" },
+      l3: { main: "訪れた", sub: "日帰り旅行 (+3 pts)" },
+      l2: { main: "立ち寄り", sub: "乗り換え / 立ち寄り (+2 pts)" },
+      l1: { main: "通過", sub: "通過しただけ (+1 pt)" },
+      l0: { main: "未踏", sub: "行ったことがない (0 pt)" }
+    },
+    countryModal: {
+      title: "国を選択",
+      world: "🌍 世界", fr: "🇫🇷 フランス", it: "🇮🇹 イタリア", es: "🇪🇸 スペイン", jp: "🇯🇵 日本", us: "🇺🇸 アメリカ",
+      avail: "利用可能", soon: "近日公開"
+    },
+    langModalTitle: "言語を選択",
+    tapName: "👉 名前を入力",
+    bgWatermark: "日本",
+    bgWatermarkWorld: "世界",
+    bgWatermarkFrance: "フランス",
+    bgWatermarkSpain: "スペイン",
+    tutorial: {
+      title: "ようこそ！ 🌍",
+      subtitle: "アプリの使い方",
+      step1Title: "ズーム＆移動",
+      step1Desc: "2本の指でピンチするか、マウスホイールを使用してマップをナビゲートします。",
+      step2Title: "訪問レベルの選択",
+      step2Desc: "地域や県をクリックして、訪問レベルを記録します。",
+      step3Title: "書き出し＆シェア",
+      step3Desc: "書き出しボタンをクリックして、SNSに最適な美しいマップをダウンロードしましょう！",
+      closeBtn: "スタート！"
+    }
+  },
+  fr: {
+    subtitle: "À quel point as-tu exploré <span style='display: inline-block;'>le Japon ?</span>",
+    subtitleWorld: "À quel point as-tu exploré <span style='display: inline-block;'>le Monde ?</span>",
+    subtitleFrance: "Combien de départements <span style='display: inline-block;'>de France as-tu exploré ?</span>",
+    subtitleSpain: "Combien de provinces <span style='display: inline-block;'>d'Espagne as-tu exploré ?</span>",
+    exportBtn: '<i class="fa fa-download"></i> Exporter',
+    legend: ["Habité", "Séjourné", "Visité", "Escale", "Passé", "Jamais"],
+    insetLabel: "ENCART",
+    explored: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">a exploré </span><strong style="color:#ffffff;">${count} régions</strong></span></div>`,
+    exploredWorld: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">a exploré </span><strong style="color:#ffffff;">${count} pays</strong></span></div>`,
+    exploredFrance: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">a exploré </span><strong style="color:#ffffff;">${count} départements</strong></span></div>`,
+    exploredSpain: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">a exploré </span><strong style="color:#ffffff;">${count} provinces</strong></span></div>`,
+    modal: {
+      title: "Exporter ta carte !",
+      desc: "Cette application est <strong>100% gratuite</strong> !<br>Un simple abonnement sur Instagram m'aide<br>énormément à continuer cette aventure.<br>🏍️🇯🇵 <strong>Merci pour ton soutien !</strong>",
+      follow: `<i class="fa-brands fa-instagram"></i> Suivre @french_rider_in_japan`,
+      dlAnyway: "Télécharger quand même",
+      dlShared: "Je me suis abonné ! HD 🎉"
+    },
+    levelModal: {
+      subtitle: "Quel est votre niveau de visite ?",
+      l5: { main: "Habité", sub: "J'y ai habité (+5 pts)" },
+      l4: { main: "Séjourné", sub: "Séjour ≥ 1 nuit (+4 pts)" },
+      l3: { main: "Visité", sub: "Visite de journée (+3 pts)" },
+      l2: { main: "Escale", sub: "Arrêt / Escale (+2 pts)" },
+      l1: { main: "Passé", sub: "Simple passage (+1 pt)" },
+      l0: { main: "Jamais", sub: "Jamais allé (0 pt)" }
+    },
+    countryModal: {
+      title: "Choisis ton pays",
+      world: "🌍 Monde", fr: "🇫🇷 France", it: "🇮🇹 Italie", es: "🇪🇸 Espagne", jp: "🇯🇵 Japon", us: "🇺🇸 USA",
+      avail: "Disponible", soon: "Bientôt"
+    },
+    langModalTitle: "Choisis ta langue",
+    tapName: "👉 Entre ton nom",
+    bgWatermark: "JAPON",
+    bgWatermarkWorld: "MONDE",
+    bgWatermarkFrance: "FRANCE",
+    bgWatermarkSpain: "ESPAGNE",
+    tutorial: {
+      title: "Bienvenue ! 🌍",
+      subtitle: "Comment utiliser l'application",
+      step1Title: "Zoomer & Déplacer",
+      step1Desc: "Pincez avec 2 doigts ou utilisez la molette de la souris pour naviguer sur la carte.",
+      step2Title: "Sélectionner un Statut",
+      step2Desc: "Cliquez sur une région ou un département pour enregistrer votre niveau d'exploration.",
+      step3Title: "Exporter & Partager",
+      step3Desc: "Cliquez sur le bouton d'export pour télécharger une superbe carte prête pour vos réseaux sociaux !",
+      closeBtn: "C'est parti !"
+    }
+  },
+  es: {
+    subtitle: "¿Cuánto de Japón has explorado?",
+    subtitleWorld: "¿Cuánto del Mundo has explorado?",
+    subtitleFrance: "¿Cuánto de Francia has explorado?",
+    subtitleSpain: "¿Cuánto de España has explorado?",
+    exportBtn: '<i class="fa fa-download"></i> Exportar',
+    legend: ["Vivido", "Alojado", "Visitado", "Escala", "Pasado", "Nunca"],
+    insetLabel: "RECUADRO",
+    explored: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">ha explorado </span><strong style="color:#ffffff;">${count} regiones</strong></span></div>`,
+    exploredWorld: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">ha explorado </span><strong style="color:#ffffff;">${count} países</strong></span></div>`,
+    exploredFrance: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">ha explorado </span><strong style="color:#ffffff;">${count} departamentos</strong></span></div>`,
+    exploredSpain: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">ha explorado </span><strong style="color:#ffffff;">${count} provincias</strong></span></div>`,
+    modal: {
+      title: "¡Exporta tu mapa!",
+      desc: "Esta aplicación es <strong>100% gratuita</strong>.<br>Un simple seguimiento en Instagram me ayuda<br>muchísimo a continuar esta aventura.<br>🏍️🇯🇵 <strong>¡Gracias por tu apoyo!</strong>",
+      follow: `<i class="fa-brands fa-instagram"></i> Seguir @french_rider_in_japan`,
+      dlAnyway: "Descargar de todos modos",
+      dlShared: "¡Ya te sigo! Descargar en HD 🎉"
+    },
+    levelModal: {
+      subtitle: "¿Cuál es tu nivel de exploración?",
+      l5: { main: "Vivido", sub: "He vivido ahí (+5 pts)" },
+      l4: { main: "Alojado", sub: "Estancia ≥ 1 noche (+4 pts)" },
+      l3: { main: "Visitado", sub: "Visita de un día (+3 pts)" },
+      l2: { main: "Escala", sub: "Parada / Escala (+2 pts)" },
+      l1: { main: "Pasado", sub: "Solo de paso (+1 pt)" },
+      l0: { main: "Nunca", sub: "Nunca he ido (0 pt)" }
+    },
+    countryModal: {
+      title: "Elige un país",
+      world: "🌍 Mundo", fr: "🇫🇷 Francia", it: "🇮🇹 Italia", es: "🇪🇸 España", jp: "🇯🇵 Japón", us: "🇺🇸 EE.UU.",
+      avail: "Disponible", soon: "Próximamente"
+    },
+    langModalTitle: "Elige tu idioma",
+    tapName: "👉 Escribe tu nombre",
+    bgWatermark: "JAPÓN",
+    bgWatermarkWorld: "MUNDO",
+    bgWatermarkFrance: "FRANCIA",
+    bgWatermarkSpain: "ESPAÑA",
+    tutorial: {
+      title: "¡Bienvenido! 🌍",
+      subtitle: "Cómo usar la aplicación",
+      step1Title: "Zoom y Mover",
+      step1Desc: "Pellizca con 2 dedos o usa la rueda del ratón para navegar por el mapa.",
+      step2Title: "Seleccionar Nivel",
+      step2Desc: "Pulsa una región o departamento para registrar tu nivel de exploración.",
+      step3Title: "Exportar y Compartir",
+      step3Desc: "Pulsa el botón de exportar para descargar un mapa hermoso listo para tus redes sociales.",
+      closeBtn: "¡Vamos!"
+    }
+  },
+  ko: {
+    subtitle: "일본을 얼마나 탐험했나요?",
+    subtitleWorld: "세계의 얼마나 탐험했나요?",
+    subtitleFrance: "프랑스의 어디를 여행하셨나요?",
+    subtitleSpain: "스페인의 어디를 여행하셨나요?",
+    exportBtn: '<i class="fa fa-download"></i> 내보내기',
+    legend: ["거주", "숙박", "방문", "경유", "통과", "미방문"],
+    insetLabel: "확대도",
+    explored: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><strong style="color:#ffffff;">${count}개 지역</strong><span style="opacity:0.7; font-weight:400;"> 탐험</span></span></div>`,
+    exploredWorld: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><strong style="color:#ffffff;">${count}개국</strong><span style="opacity:0.7; font-weight:400;"> 탐험</span></span></div>`,
+    exploredFrance: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><strong style="color:#ffffff;">${count}개 부서</strong><span style="opacity:0.7; font-weight:400;"> 탐험</span></span></div>`,
+    exploredSpain: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><strong style="color:#ffffff;">${count}개 주</strong><span style="opacity:0.7; font-weight:400;"> 탐험</span></span></div>`,
+    modal: {
+      title: "지도 내보내기!",
+      desc: "이 앱은 <strong>100% 무료</strong>입니다!<br>인스타그램 팔로우 하나로<br>이 모험을 이어갈 수 있습니다.<br>🏍️🇯🇵 <strong>응원 감사합니다!</strong>",
+      follow: `<i class="fa-brands fa-instagram"></i> @french_rider_in_japan 팔로우`,
+      dlAnyway: "그냥 다운로드",
+      dlShared: "팔로우했어요! HD 다운로드 🎉"
+    },
+    levelModal: {
+      subtitle: "탐험 레벨을 선택하세요",
+      l5: { main: "거주", sub: "거주한 적 있음 (+5 pts)" },
+      l4: { main: "숙박", sub: "1박 이상 숙박 (+4 pts)" },
+      l3: { main: "방문", sub: "당일 방문 (+3 pts)" },
+      l2: { main: "경유", sub: "경유 / 환승 (+2 pts)" },
+      l1: { main: "통과", sub: "지나간 적 있음 (+1 pt)" },
+      l0: { main: "미방문", sub: "가본 적 없음 (0 pt)" }
+    },
+    countryModal: {
+      title: "국가 선택",
+      world: "🌍 세계", fr: "🇫🇷 프랑스", it: "🇮🇹 이탈리아", es: "🇪🇸 스페인", jp: "🇯🇵 일본", us: "🇺🇸 미국",
+      avail: "사용 가능", soon: "곧 출시"
+    },
+    langModalTitle: "언어 선택",
+    tapName: "👉 이름을 입력하세요",
+    bgWatermark: "일본",
+    bgWatermarkWorld: "세계",
+    bgWatermarkFrance: "프랑스",
+    bgWatermarkSpain: "스페인",
+    tutorial: {
+      title: "환영합니다! 🌍",
+      subtitle: "앱 사용 방법",
+      step1Title: "확대 및 이동",
+      step1Desc: "두 손가락으로 핀치하거나 마우스 휠을 사용하여 지도를 탐색하세요.",
+      step2Title: "탐험 레벨 선택",
+      step2Desc: "지역이나 도를 클릭하여 탐험 레벨을 기록하세요.",
+      step3Title: "내보내기 및 공유",
+      step3Desc: "내보내기 버튼을 클릭하여 SNS에 공유할 멋진 지도를 다운로드하세요!",
+      closeBtn: "시작!"
+    }
+  },
+  zh: {
+    subtitle: "你探索了多少日本？",
+    subtitleWorld: "你探索了多少世界？",
+    subtitleFrance: "你探索了多少法国？",
+    subtitleSpain: "你探索了多少西班牙？",
+    exportBtn: '<i class="fa fa-download"></i> 导出',
+    legend: ["居住", "住宿", "游览", "经停", "路过", "未去"],
+    insetLabel: "放大图",
+    explored: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">已探索 </span><strong style="color:#ffffff;">${count} 个地区</strong></span></div>`,
+    exploredWorld: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">已探索 </span><strong style="color:#ffffff;">${count} 个国家</strong></span></div>`,
+    exploredFrance: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">已探索 </span><strong style="color:#ffffff;">${count} 个省份</strong></span></div>`,
+    exploredSpain: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><span style="opacity:0.7; font-weight:400;">已探索 </span><strong style="color:#ffffff;">${count} 个省份</strong></span></div>`,
+    modal: {
+      title: "导出你的地图！",
+      desc: "这个应用是<strong>100%免费</strong>的！<br>在Instagram上关注我<br>将极大地帮助我继续这段冒险。<br>🏍️🇯🇵 <strong>感谢你的支持！</strong>",
+      follow: `<i class="fa-brands fa-instagram"></i> 关注 @french_rider_in_japan`,
+      dlAnyway: "直接下载",
+      dlShared: "已关注！下载高清版 🎉"
+    },
+    levelModal: {
+      subtitle: "选择你的探索等级",
+      l5: { main: "居住", sub: "曾经居住 (+5 pts)" },
+      l4: { main: "住宿", sub: "住宿 ≥ 1 晚 (+4 pts)" },
+      l3: { main: "游览", sub: "一日游 (+3 pts)" },
+      l2: { main: "经停", sub: "中转 / 经停 (+2 pts)" },
+      l1: { main: "路过", sub: "路过 (+1 pt)" },
+      l0: { main: "未去", sub: "从未去过 (0 pt)" }
+    },
+    countryModal: {
+      title: "选择国家",
+      world: "🌍 世界", fr: "🇫🇷 法国", it: "🇮🇹 意大利", es: "🇪🇸 西班牙", jp: "🇯🇵 日本", us: "🇺🇸 美国",
+      avail: "可用", soon: "即将推出"
+    },
+    langModalTitle: "选择语言",
+    tapName: "👉 输入你的名字",
+    bgWatermark: "日本",
+    bgWatermarkWorld: "世界",
+    bgWatermarkFrance: "法国",
+    bgWatermarkSpain: "西班牙",
+    tutorial: {
+      title: "欢迎！ 🌍",
+      subtitle: "如何使用此应用",
+      step1Title: "缩放与移动",
+      step1Desc: "用两根手指捏合或使用鼠标滚轮在地图上导航。",
+      step2Title: "选择探索等级",
+      step2Desc: "点击地区或省份以记录您的探索等级。",
+      step3Title: "导出与分享",
+      step3Desc: "点击导出按钮，下载一张适合社交媒体的精美地图！",
+      closeBtn: "出发！"
+    }
+  },
+  hi: {
+    subtitle: "आपने जापान का कितना हिस्सा खोजा है?",
+    subtitleWorld: "आपने दुनिया का कितना हिस्सा खोजा है?",
+    subtitleFrance: "आपने फ्रांस का कितना हिस्सा खोजा है?",
+    subtitleSpain: "आपने स्पेन का कितना हिस्सा खोजा है?",
+    exportBtn: '<i class="fa fa-download"></i> निर्यात',
+    legend: ["रहे", "ठहरे", "देखा", "रुके", "गुज़रे", "कभी नहीं"],
+    insetLabel: "इनसेट",
+    explored: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><strong style="color:#ffffff;">${count} क्षेत्र</strong><span style="opacity:0.7; font-weight:400;"> खोजे</span></span></div>`,
+    exploredWorld: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><strong style="color:#ffffff;">${count} देश</strong><span style="opacity:0.7; font-weight:400;"> खोजे</span></span></div>`,
+    exploredFrance: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><strong style="color:#ffffff;">${count} विभागों</strong><span style="opacity:0.7; font-weight:400;"> का दौरा किया है</span></span></div>`,
+    exploredSpain: (nameHtml, count) => `<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span>${nameHtml}</span><span style="font-size:0.75em; text-transform:none; margin-top:3px; letter-spacing:0.2px;"><strong style="color:#ffffff;">${count} प्रांतों</strong><span style="opacity:0.7; font-weight:400;"> का दौरा किया है</span></span></div>`,
+    modal: {
+      title: "अपना मानचित्र निर्यात करें!",
+      desc: "यह ऐप <strong>100% मुफ़्त</strong> है!<br>Instagram पर फ़ॉलो करना<br>इस यात्रा को जारी रखने में बहुत मदद करता है।<br>🏍️🇯🇵 <strong>आपके समर्थन का धन्यवाद!</strong>",
+      follow: `<i class="fa-brands fa-instagram"></i> @french_rider_in_japan फ़ॉलो करें`,
+      dlAnyway: "वैसे भी डाउनलोड करें",
+      dlShared: "मैंने फ़ॉलो किया! HD डाउनलोड 🎉"
+    },
+    levelModal: {
+      subtitle: "अपना अन्वेषण स्तर चुनें",
+      l5: { main: "रहे", sub: "वहाँ रहा (+5 pts)" },
+      l4: { main: "ठहरे", sub: "1 रात ≥ ठहरा (+4 pts)" },
+      l3: { main: "देखा", sub: "दिन की यात्रा (+3 pts)" },
+      l2: { main: "रुके", sub: "पड़ाव / रुकावट (+2 pts)" },
+      l1: { main: "गुज़रे", sub: "बस गुज़रा (+1 pt)" },
+      l0: { main: "कभी नहीं", sub: "कभी नहीं गया (0 pt)" }
+    },
+    countryModal: {
+      title: "देश चुनें",
+      world: "🌍 विश्व", fr: "🇫🇷 फ़्रांस", it: "🇮🇹 इटली", es: "🇪🇸 स्पेन", jp: "🇯🇵 जापान", us: "🇺🇸 अमेरिका",
+      avail: "उपलब्ध", soon: "जल्द आ रहा है"
+    },
+    langModalTitle: "भाषा चुनें",
+    tapName: "👉 अपना नाम लिखें",
+    bgWatermark: "जापान",
+    bgWatermarkWorld: "दुनिया",
+    bgWatermarkFrance: "फ्रांस",
+    bgWatermarkSpain: "स्पेन",
+    tutorial: {
+      title: "स्वागत है! 🌍",
+      subtitle: "एप कैसे उपयोग करें",
+      step1Title: "ज़ूम और नेविगेट",
+      step1Desc: "मानचित्र पर नेविगेट करने के लिए 2 उंगलियों से पिंच करें या माउस स्क्रॉल का उपयोग करें।",
+      step2Title: "स्तर चुनें",
+      step2Desc: "अपना अन्वेषण स्तर दर्ज करने के लिए किसी क्षेत्र पर क्लिक करें।",
+      step3Title: "निर्यात और साझा करें",
+      step3Desc: "सोशल मीडिया के लिए तैयार एक सुंदर मानचित्र डाउनलोड करने के लिए निर्यात बटन पर क्लिक करें!",
+      closeBtn: "चलिए शुरू करें!"
+    }
+  }
+};

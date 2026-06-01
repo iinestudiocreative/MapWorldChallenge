@@ -1,0 +1,679 @@
+/* ══════════════════════════════════════════════════
+   MAPLEVEL — styles.css
+   Modern Bright High-Contrast Aesthetic (Nike-like)
+   ══════════════════════════════════════════════════ */
+
+:root {
+  --c0: #f3f4f6;   /* Never (clean soft grey) */
+  --c1: #bfdbfe;   /* Passed (soft pop pastel blue) */
+  --c2: #a7f3d0;   /* Alighted (soft pop pastel mint green) */
+  --c3: #fef08a;   /* Visited (soft pop pastel yellow) */
+  --c4: #fed7aa;   /* Stayed (soft pop pastel orange peach) */
+  --c5: #fda4af;   /* Lived (soft pop pastel pink red) */
+  --sea:    linear-gradient(135deg, #2481ad 0%, #2abf84 100%); /* Vibrant oceanic blue-to-green gradient */
+  --header: #ffffff; /* Nike pure white header */
+  --accent: #111111; /* Nike obsidian black accent */
+  --font:   'Outfit', sans-serif;
+  --radius: 6px;     /* Subtle modern sharp rounded corner */
+}
+
+/* Level colors applied as fill on SVG paths */
+.l0 { fill: var(--c0); }
+.l1 { fill: var(--c1); }
+.l2 { fill: var(--c2); }
+.l3 { fill: var(--c3); }
+.l4 { fill: var(--c4); }
+.l5 { fill: var(--c5); }
+
+/* Dot colors for legend & modal */
+[data-l="0"] { background: var(--c0); border: 1.5px solid #ccc; }
+[data-l="1"] { background: var(--c1); }
+[data-l="2"] { background: var(--c2); }
+[data-l="3"] { background: var(--c3); }
+[data-l="4"] { background: var(--c4); }
+[data-l="5"] { background: var(--c5); }
+
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+  -webkit-tap-highlight-color: transparent; 
+}
+
+body {
+  font-family: var(--font);
+  background: #000000; /* Pure immersive black background (stunning on OLED mobile screens) */
+  color: #111111;      /* Crisp black text */
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centers the app if screen is taller than the app */
+  padding: 0;
+  gap: 0;
+}
+
+/* ── EXPORT CARD ─────────────────────────────────────── */
+#export-card {
+  width: 100%;
+  max-width: 560px; /* Perfect width for desktop/tablet */
+  aspect-ratio: 9 / 16; /* Strict 9:16 Instagram Story/Post aspect ratio! */
+  background: #ffffff;
+  border-radius: 0; /* Flat, modern Nike borders */
+  border: none;     /* Borderless card for premium fullscreen layout */
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header (Obsidian Indigo-Teal Premium Gradient) */
+#card-header {
+  background: linear-gradient(135deg, #1a2238 0%, #204d5b 100%); /* Gorgeous dark gradient from image */
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12); /* Subtle glossy divider */
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#card-title-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#card-flag { 
+  font-size: 2.2rem; 
+}
+
+#card-title-block h1 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  text-transform: uppercase; /* Bold sporty Nike look */
+  letter-spacing: -1.2px;
+  line-height: 0.95;
+  color: #ffffff; /* Crisp white title */
+}
+
+#card-subtitle-phrase {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #cbd5e1; /* Elegant light slate-blue */
+  margin-top: 1px; /* Reduced by 2px */
+  letter-spacing: -0.2px;
+}
+
+#card-score-block {
+  text-align: right;
+}
+
+#card-score {
+  font-size: 2.2rem; /* Reduced by 2pt */
+  font-weight: 950;
+  color: #ffffff; /* Crisp white score */
+  line-height: 1;
+}
+
+#card-score-block small {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #94a3b8; /* Soft slate gray PTS label */
+  text-transform: uppercase;
+  display: block;
+  white-space: nowrap;
+  margin-top: -3px; /* Reduced space by 1px */
+}
+
+/* Map area with 10px sea margin */
+#map-wrapper {
+  background: var(--sea);
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px; /* Reduced outer sea margin to 10px */
+  border-bottom: none; /* Razor-sharp modern transition between sea and black legend */
+  flex-grow: 1; /* Automatically expand to occupy all vertical space in the 9:16 layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Massive Background Text Watermark */
+#bg-watermark {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24vw; /* Massive text size relative to width */
+  font-weight: 950;
+  color: #ffffff;
+  opacity: 0.07; /* Lowered by 3% to 7% */
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  pointer-events: none;
+  z-index: 0; /* Behind the map */
+  user-select: none;
+  white-space: nowrap;
+  line-height: 0.9; /* Compact line height for repeating pattern */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px; /* Exactly 6px vertical spacing between lines */
+}
+
+#btn-floating-profile {
+  position: absolute;
+  bottom: 63px; /* Normal display position (raised by 20px) */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5); /* 50% opacity pure black */
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Very subtle edge */
+  border-radius: 50px; /* Same elegant pill shape as instagram capsule */
+  padding: 8px 14px;
+  color: #ffffff;
+  font-family: var(--font);
+  font-size: 0.85rem; /* Enlarged text for better readability */
+  font-weight: 800;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px; /* Exactly the same width as the Instagram pill */
+  box-sizing: border-box;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: all 0.15s ease;
+}
+#btn-floating-profile:hover {
+  background: #333333;
+  transform: translateX(-50%) translateY(-1px);
+}
+#btn-floating-profile:active {
+  transform: translateX(-50%) scale(0.96);
+}
+
+#map-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  transform: translateY(-65px); /* Map shifted up to reduce top space and make room for bottom badges */
+  display: block;
+  position: relative;
+  z-index: 10; /* Ensure map is above the background text */
+}
+
+.cell-rect {
+  filter: drop-shadow(3px 6px 4px rgba(26, 37, 51, 0.25)); /* Increased shadow opacity by 10% */
+  transition: filter 0.12s, fill 0.15s;
+}
+.cell-group:hover .cell-rect {
+  filter: brightness(0.93) drop-shadow(4px 9px 6px rgba(26, 37, 51, 0.30)); /* Increased hover shadow opacity accordingly */
+}
+
+.cell-path {
+  transition: filter 0.12s, fill 0.15s;
+}
+.cell-group:hover .cell-path, .cell-path:hover {
+  filter: brightness(0.93);
+}
+
+#map-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 800;
+  color: #111111;
+  font-size: 1rem;
+  background: var(--sea);
+  z-index: 5;
+}
+
+/* Legend bar (Premium Obsidian Black panel) */
+#card-legend {
+  background: #111111; /* Nike obsidian black background */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle glossy separator */
+  padding: 6px 6px; /* Added 3px: now 6px top and bottom */
+  display: flex;
+  flex-wrap: nowrap; /* Force one line */
+  gap: 4px;
+  justify-content: space-evenly;
+  overflow: hidden;
+}
+
+.leg-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.65rem; /* Scaled down slightly to guarantee 1-line fit */
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #ffffff; /* High contrast crisp white labels */
+  white-space: nowrap;
+}
+
+.leg-dot {
+  display: inline-block;
+  width: 10px; 
+  height: 10px;
+  border-radius: 50%; /* Gorgeous colored circles */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+/* Floating Watermark Pill */
+#card-watermark {
+  position: absolute;
+  bottom: 33px; /* Moved up by 25px */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  z-index: 100;
+}
+
+#card-watermark span {
+  background: rgba(255, 255, 255, 0.15); /* Increased opacity to 15% */
+  color: #ffffff;
+  font-size: 0.58rem;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 50px; /* Elegant pill shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px; /* Exactly the same width as the profile pill */
+  box-sizing: border-box;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  white-space: nowrap; /* Force text to stay on one line */
+  transition: all 0.15s ease;
+}
+
+#card-watermark:hover span {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── CONTROLS ─────────────────────────────────────── */
+#controls-bar {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-wrap: wrap; /* responsive wrapping on mobile */
+  gap: 8px;
+  padding: 16px 12px 66px 12px; /* Added 50px to bottom edge */
+  background: linear-gradient(135deg, #1a2238 0%, #204d5b 100%); /* Same premium gradient as header */
+}
+
+#controls-bar button {
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  border: 1.5px solid rgba(255, 255, 255, 0.15); /* Sleek translucent borders */
+  border-radius: 0; /* Sharp right angles */
+  padding: 0 16px;
+  height: 46px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+#btn-country-select, #btn-lang-select {
+  flex: 1 1 calc(50% - 4px); /* Share the first row exactly */
+  background: rgba(255, 255, 255, 0.08); /* Sophisticated frosted look */
+  color: #ffffff;
+  justify-content: space-between; /* Space out text and chevron */
+  /* Borders and radii are handled by the generic button styles */
+}
+
+#controls-bar button:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+#controls-bar button:active {
+  transform: scale(0.97);
+}
+
+#btn-export.btn-accent {
+  background: #ffffff; /* Nike high-contrast solid white */
+  color: #111111;      /* Obsidian black text */
+  border: none;
+  flex: 1;
+}
+
+#btn-export.btn-accent:hover {
+  background: #e5e5e5;
+}
+
+#btn-reset.btn-muted {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ff5252; /* Vivid neon-red reset icon */
+}
+#btn-reset.btn-muted:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── MODALS (Modern Centered Nike App Style) ──────── */
+#modal-overlay, #export-overlay, #country-overlay, #lang-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center; /* Always centered on all devices */
+  justify-content: center;
+  z-index: 200;
+  padding: 16px; /* Elegant safety padding for mobile screens */
+  transition: opacity 0.2s ease;
+}
+
+#modal-overlay.hidden, #export-overlay.hidden, #country-overlay.hidden, #lang-overlay.hidden {
+  opacity: 0; 
+  pointer-events: none;
+}
+
+.custom-modal {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  border: none;
+  border-radius: 0;
+  padding: 24px 0 0; /* No horizontal or bottom padding, buttons will touch edges */
+  box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 0 16px; /* Inner padding for the header */
+}
+
+.modal-header h3 {
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  color: #111111;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #111111;
+  font-weight: 900;
+  line-height: 1;
+}
+
+#modal-sub,
+#tuto-subtitle {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #8e8e93;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  padding: 0 16px; /* Inner padding for the subtitle */
+  margin-top: -12px;
+}
+
+.modal-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* Remove space to fuse buttons together */
+}
+
+.opt-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid #e5e7eb;
+  margin-bottom: -1.5px; /* Collapse borders */
+  border-radius: 0;
+  background: #ffffff;
+  cursor: pointer;
+  font-family: var(--font);
+  text-align: left;
+  width: 100%; /* Extend horizontally to maximum */
+  position: relative;
+  transition: all 0.12s ease;
+}
+
+.opt-btn:hover {
+  background: #f9fafb;
+  border-color: #111111;
+  z-index: 1;
+}
+.opt-btn.selected {
+  border-color: #111111;
+  background: #f3f4f6;
+  z-index: 2;
+}
+
+.opt-dot {
+  width: 16px; 
+  height: 16px;
+  border-radius: 50%; /* Colored circles instead of squares */
+  border: 1.5px solid rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.opt-btn div {
+  display: flex;
+  flex-direction: column;
+}
+
+.opt-btn strong {
+  font-size: 0.88rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  color: #111111;
+  letter-spacing: -0.2px;
+}
+
+.opt-btn small {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #8e8e93;
+}
+
+/* ── EXPORT / FOLLOW MODAL ─────────────────────────── */
+#export-modal {
+  background: #ffffff;
+  width: 100%;
+  max-width: 400px;
+  border: none;
+  border-radius: 0;
+  padding: 28px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+.ex-icon { 
+  font-size: 3.2rem; 
+}
+
+#export-modal h2 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.8px;
+  color: #111111;
+}
+
+#export-modal p {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #767677;
+  line-height: 1.6;
+}
+
+#btn-follow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFDE00;
+  color: #111111;
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 0;
+  text-decoration: none;
+  width: 100%;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+#btn-follow:hover {
+  background: #f0cf00;
+  transform: translateY(-1px);
+}
+
+#btn-dl-shared {
+  width: 100%;
+  background: #f5f5f5;
+  color: #111111;
+  border: none;
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  padding: 14px;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#btn-dl-shared:hover {
+  background: #e5e5e5;
+  transform: translateY(-1px);
+}
+
+#btn-dl-anyway {
+  background: none;
+  border: none;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #888888;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 4px;
+}
+#btn-dl-anyway:hover {
+  color: #111111;
+}
+
+/* ── TOAST (Nike clean message pill) ───────────────── */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #111111;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  z-index: 1000;
+  pointer-events: none;
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  white-space: nowrap;
+}
+
+#toast.show { 
+  transform: translateX(-50%) translateY(0); 
+}
+
+/* ── Tutorial Modal Styling ── */
+#tutorial-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  padding: 16px;
+  transition: opacity 0.3s ease;
+}
+
+#tutorial-overlay.hidden {
+  display: none !important;
+}
+
+#btn-tuto-close:hover {
+  background: #222222 !important;
+  transform: translateY(-1px);
+}
+
+#tuto-title {
+  font-size: 1.15rem;
+  white-space: nowrap;
+}
+
+/* ── Country Modal Option Scrollbar Styling ── */
+#country-modal .modal-opts {
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+#country-modal .modal-opts .opt-btn:first-child {
+  border-top: none;
+}
+
+
+#country-modal .modal-opts::-webkit-scrollbar {
+  width: 6px;
+}
+
+#country-modal .modal-opts::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-left: 1.5px solid #111111;
+}
+
+#country-modal .modal-opts::-webkit-scrollbar-thumb {
+  background: #111111;
+}
+
+#country-modal .modal-header {
+  margin-bottom: 15px;
+}
+
+

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- Prevent browser caching during development -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>MapLevel — Crée ta carte de voyage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="d3.min.js"></script>
+  <script src="topojson-client.min.js"></script>
+  <script src="html2canvas.min.js"></script>
+  <link rel="stylesheet" href="styles.css?v=20260601-1150">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ EXPORT CARD (captured) -->
+<div id="export-card">
+
+  <!-- Header bar -->
+  <div id="card-header">
+    <div id="card-title-block">
+      <span id="card-flag">🌍</span>
+      <div>
+        <h1 id="card-level">Ride the world</h1>
+        <p id="card-subtitle-phrase">How much of Japan have you explored?</p>
+        <p id="card-username" style="display: none;"></p> <!-- Kept hidden for JS compatibility -->
+      </div>
+    </div>
+    <div id="card-score-block">
+      <span id="card-score">0</span>
+      <small id="card-max-score">/ 235 pts</small>
+    </div>
+  </div>
+
+  <!-- Map SVG -->
+  <div id="map-wrapper">
+    <!-- Floating Profile Icon in the top middle of the map itself -->
+    <button id="btn-floating-profile" title="Modifier le nom du voyageur">
+      <span id="lbl-floating-name"></span>
+    </button>
+    
+    <!-- Massive faint background text -->
+    <div id="bg-watermark">JAPAN</div>
+
+    <div id="map-loading">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      <p>Chargement de la carte…</p>
+    </div>
+    <svg id="map-svg" preserveAspectRatio="xMidYMid meet"></svg>
+    <!-- Floating Watermark on Map -->
+    <a id="card-watermark" href="https://www.instagram.com/french_rider_in_japan/" target="_blank" rel="noopener">
+      <span>Ride the world by <i class="fa-brands fa-instagram"></i> french_rider_in_japan</span>
+    </a>
+  </div>
+
+  <!-- Legend bar -->
+  <div id="card-legend">
+    <div class="leg-item"><span class="leg-dot" data-l="5"></span>Habité</div>
+    <div class="leg-item"><span class="leg-dot" data-l="4"></span>Séjourné</div>
+    <div class="leg-item"><span class="leg-dot" data-l="3"></span>Visité</div>
+    <div class="leg-item"><span class="leg-dot" data-l="2"></span>Escale</div>
+    <div class="leg-item"><span class="leg-dot" data-l="1"></span>Passé</div>
+    <div class="leg-item"><span class="leg-dot" data-l="0"></span>Jamais</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CONTROLS (below card) -->
+<div id="controls-bar">
+  <button id="btn-country-select">🇯🇵 Japon <i class="fa-solid fa-chevron-down" style="font-size:0.7em;margin-left:4px;"></i></button>
+  <button id="btn-lang-select">🌐 English <i class="fa-solid fa-chevron-down" style="font-size:0.7em;margin-left:4px;"></i></button>
+  <button id="btn-export" class="btn-accent"><i class="fa fa-download"></i> Exporter</button>
+  <button id="btn-reset" class="btn-muted"><i class="fa fa-rotate-left"></i></button>
+</div>
+
+<!-- ═══════════════════════════════════════════ COUNTRY MODAL -->
+<div id="country-overlay" class="hidden">
+  <div id="country-modal" class="custom-modal">
+    <div class="modal-header">
+      <h3>Choisis ton pays</h3>
+      <button id="country-close" class="modal-close">✕</button>
+    </div>
+    <a href="https://www.instagram.com/french_rider_in_japan/" target="_blank" rel="noopener" style="text-decoration: none !important; outline: none !important; box-shadow: none !important; display: flex; align-items: center; justify-content: center; gap: 8px; background: #FFDE00; color: #111111; padding: 14px 16px; font-size: 0.8rem; font-weight: 800; text-align: center; font-family: var(--font); line-height: 1.3; transition: background 0.15s ease; width: 100%; cursor: pointer;" onmouseover="this.style.background='#f0cf00'" onmouseout="this.style.background='#FFDE00'">
+      <i class="fa-brands fa-instagram" style="font-size: 1.15rem;"></i>
+      <span>Un autre pays en tête ? Suggère-le en DM !</span>
+      <i class="fa-solid fa-arrow-right-long" style="font-size: 0.85rem; margin-left: 2px;"></i>
+    </a>
+    <div class="modal-opts">
+      <button class="opt-btn country-btn" data-val="world">
+        <div><strong>🌍 World</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="es">
+        <div><strong>🇪🇸 Espagne</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="fr">
+        <div><strong>🇫🇷 France</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="it">
+        <div><strong>🇮🇹 Italie</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn selected" data-val="jp">
+        <div><strong>🇯🇵 Japon</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="us">
+        <div><strong>🇺🇸 USA</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="cn">
+        <div><strong>🇨🇳 Chine</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="kr">
+        <div><strong>🇰🇷 Corée du Sud</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="au">
+        <div><strong>🇦🇺 Australie</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="in">
+        <div><strong>🇮🇳 Inde</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="uk">
+        <div><strong>🇬🇧 Royaume-Uni</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="mx">
+        <div><strong>🇲🇽 Mexique</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="tr">
+        <div><strong>🇹🇷 Turquie</strong><small>Disponible</small></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ LANGUAGE MODAL -->
+<div id="lang-overlay" class="hidden">
+  <div id="lang-modal" class="custom-modal">
+    <div class="modal-header">
+      <h3>Choisis ta langue</h3>
+      <button id="lang-close" class="modal-close">✕</button>
+    </div>
+    <div class="modal-opts">
+      <button class="opt-btn lang-btn" data-val="zh">
+        <div><strong>🇨🇳 中文</strong></div>
+      </button>
+      <button class="opt-btn lang-btn" data-val="en">
+        <div><strong>🇬🇧 English</strong></div>
+      </button>
+      <button class="opt-btn lang-btn" data-val="es">
+        <div><strong>🇪🇸 Español</strong></div>
+      </button>
+      <button class="opt-btn lang-btn" data-val="fr">
+        <div><strong>🇫🇷 Français</strong></div>
+      </button>
+      <button class="opt-btn lang-btn" data-val="hi">
+        <div><strong>🇮🇳 हिन्दी</strong></div>
+      </button>
+      <button class="opt-btn lang-btn" data-val="ja">
+        <div><strong>🇯🇵 日本語</strong></div>
+      </button>
+      <button class="opt-btn lang-btn" data-val="ko">
+        <div><strong>🇰🇷 한국어</strong></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ LEVEL MODAL -->
+<div id="modal-overlay" class="hidden">
+  <div id="modal" class="custom-modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Préfecture</h3>
+      <button id="modal-close" class="modal-close">✕</button>
+    </div>
+    <p id="modal-sub">Quel est votre niveau de visite ?</p>
+    <div id="modal-opts" class="modal-opts">
+      <button class="opt-btn" data-level="5">
+        <span class="opt-dot" data-l="5"></span>
+        <div><strong>Lived there</strong><small>J'y ai habité (+5 pts)</small></div>
+      </button>
+      <button class="opt-btn" data-level="4">
+        <span class="opt-dot" data-l="4"></span>
+        <div><strong>Stayed there</strong><small>Séjour ≥ 1 nuit (+4 pts)</small></div>
+      </button>
+      <button class="opt-btn" data-level="3">
+        <span class="opt-dot" data-l="3"></span>
+        <div><strong>Visited there</strong><small>Visite de journée (+3 pts)</small></div>
+      </button>
+      <button class="opt-btn" data-level="2">
+        <span class="opt-dot" data-l="2"></span>
+        <div><strong>Alighted there</strong><small>Arrêt / Escale (+2 pts)</small></div>
+      </button>
+      <button class="opt-btn" data-level="1">
+        <span class="opt-dot" data-l="1"></span>
+        <div><strong>Passed there</strong><small>Simple passage (+1 pt)</small></div>
+      </button>
+      <button class="opt-btn" data-level="0">
+        <span class="opt-dot" data-l="0"></span>
+        <div><strong>Never been</strong><small>Jamais allé (0 pt)</small></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ EXPORT / FOLLOW MODAL -->
+<div id="export-overlay" class="hidden">
+  <div id="export-modal">
+    <div class="ex-icon" id="export-icon"><i class="fa-solid fa-compass"></i></div>
+    <h2 id="export-title">Exporter ta carte !</h2>
+    <p id="export-desc">Cette application est <strong>100% gratuite</strong> !<br>Un simple abonnement sur Instagram m'aide<br>énormément à continuer cette aventure.<br>🏍️🇯🇵 <strong>Merci pour ton soutien !</strong></p>
+    <a id="btn-follow" href="https://www.instagram.com/french_rider_in_japan/" target="_blank" rel="noopener">
+      <i class="fa-brands fa-instagram"></i> Suivre french_rider_in_japan
+    </a>
+    <button id="btn-dl-anyway">Télécharger quand même</button>
+    <button id="btn-dl-shared">J'ai partagé ! Télécharger en HD 🎉</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TUTORIAL POPUP MODAL -->
+<div id="tutorial-overlay" class="hidden" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  <div id="tutorial-modal" class="custom-modal">
+    <div class="modal-header">
+      <h3 id="tuto-title">Bienvenue</h3>
+      <button id="btn-tuto-header-close" class="modal-close">✕</button>
+    </div>
+    <p id="tuto-subtitle">Comment utiliser l'application</p>
+    
+    <div class="modal-opts" id="tuto-steps">
+      <!-- Step 1 -->
+      <div class="opt-btn" style="cursor: default; pointer-events: none;">
+        <span class="opt-dot" style="display: flex; align-items: center; justify-content: center; background: #e5e7eb; border: none; font-size: 0.8rem; width: 24px; height: 24px; color: #111111;"><i class="fa-solid fa-maximize"></i></span>
+        <div>
+          <strong id="tuto-step1-title">Zoomer & Déplacer</strong>
+          <small id="tuto-step1-desc">Pincez avec 2 doigts ou utilisez la molette de la souris pour naviguer sur la carte.</small>
+        </div>
+      </div>
+      
+      <!-- Step 2 -->
+      <div class="opt-btn" style="cursor: default; pointer-events: none;">
+        <span class="opt-dot" style="display: flex; align-items: center; justify-content: center; background: #e5e7eb; border: none; font-size: 0.8rem; width: 24px; height: 24px; color: #111111;"><i class="fa-solid fa-location-dot"></i></span>
+        <div>
+          <strong id="tuto-step2-title">Sélectionner un Statut</strong>
+          <small id="tuto-step2-desc">Cliquez sur une région ou un département pour enregistrer votre niveau d'exploration.</small>
+        </div>
+      </div>
+      
+      <!-- Step 3 -->
+      <div class="opt-btn" style="cursor: default; pointer-events: none;">
+        <span class="opt-dot" style="display: flex; align-items: center; justify-content: center; background: #e5e7eb; border: none; font-size: 0.8rem; width: 24px; height: 24px; color: #111111;"><i class="fa-solid fa-share-nodes"></i></span>
+        <div>
+          <strong id="tuto-step3-title">Exporter & Partager</strong>
+          <small id="tuto-step3-desc">Cliquez sur le bouton d'export pour télécharger une superbe carte prête pour vos réseaux sociaux !</small>
+        </div>
+      </div>
+    </div>
+    
+    <div style="padding: 20px 16px 19px;">
+      <button id="btn-tuto-close" style="width: 100%; border: 1.5px solid #111111; background: #111111; color: #ffffff; border-radius: 0; padding: 14px; font-size: 0.9rem; font-weight: 900; text-transform: uppercase; font-family: var(--font); cursor: pointer; transition: all 0.15s ease;">C'est parti !</button>
+    </div>
+    <a href="https://www.instagram.com/french_rider_in_japan/" target="_blank" rel="noopener" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; background: #FFDE00; color: #111111; padding: 14px 16px; font-size: 0.8rem; font-weight: 800; text-align: center; font-family: var(--font); line-height: 1.3; transition: background 0.15s ease; width: 100%; cursor: pointer;" onmouseover="this.style.background='#f0cf00'" onmouseout="this.style.background='#FFDE00'">
+      <i class="fa-brands fa-instagram" style="font-size: 1.15rem;"></i>
+      <span>Un autre pays en tête ? Suggère-le en DM !</span>
+      <i class="fa-solid fa-arrow-right-long" style="font-size: 0.85rem; margin-left: 2px;"></i>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TOAST -->
+<div id="toast"></div>
+
+  <script src="app.js?v=20260601-1150"></script>
+</body>
+</html>
