@@ -21,7 +21,7 @@
   <script src="d3.min.js"></script>
   <script src="topojson-client.min.js"></script>
   <script src="html2canvas.min.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20260601-1150">
+  <link rel="stylesheet" href="styles.css?v=20260601-1921">
 </head>
 <body>
 
@@ -64,6 +64,7 @@
     <!-- Floating Watermark on Map -->
     <a id="card-watermark" href="https://www.instagram.com/french_rider_in_japan/" target="_blank" rel="noopener">
       <span>Ride the world by <i class="fa-brands fa-instagram"></i> french_rider_in_japan</span>
+      <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; color: #ffffff; margin-top: 6px; opacity: 0.6; animation: bounce 2s infinite;"></i>
     </a>
   </div>
 
@@ -99,44 +100,44 @@
       <i class="fa-solid fa-arrow-right-long" style="font-size: 0.85rem; margin-left: 2px;"></i>
     </a>
     <div class="modal-opts">
-      <button class="opt-btn country-btn" data-val="world">
+      <button class="opt-btn country-btn selected" data-val="world">
         <div><strong>🌍 World</strong><small>Disponible</small></div>
-      </button>
-      <button class="opt-btn country-btn" data-val="es">
-        <div><strong>🇪🇸 Espagne</strong><small>Disponible</small></div>
-      </button>
-      <button class="opt-btn country-btn" data-val="fr">
-        <div><strong>🇫🇷 France</strong><small>Disponible</small></div>
-      </button>
-      <button class="opt-btn country-btn" data-val="it">
-        <div><strong>🇮🇹 Italie</strong><small>Disponible</small></div>
-      </button>
-      <button class="opt-btn country-btn selected" data-val="jp">
-        <div><strong>🇯🇵 Japon</strong><small>Disponible</small></div>
-      </button>
-      <button class="opt-btn country-btn" data-val="us">
-        <div><strong>🇺🇸 USA</strong><small>Disponible</small></div>
-      </button>
-      <button class="opt-btn country-btn" data-val="cn">
-        <div><strong>🇨🇳 Chine</strong><small>Disponible</small></div>
-      </button>
-      <button class="opt-btn country-btn" data-val="kr">
-        <div><strong>🇰🇷 Corée du Sud</strong><small>Disponible</small></div>
       </button>
       <button class="opt-btn country-btn" data-val="au">
         <div><strong>🇦🇺 Australie</strong><small>Disponible</small></div>
       </button>
+      <button class="opt-btn country-btn" data-val="cn">
+        <div><strong>🇨🇳 Chine</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="fr">
+        <div><strong>🇫🇷 France</strong><small>Disponible</small></div>
+      </button>
       <button class="opt-btn country-btn" data-val="in">
         <div><strong>🇮🇳 Inde</strong><small>Disponible</small></div>
       </button>
-      <button class="opt-btn country-btn" data-val="uk">
-        <div><strong>🇬🇧 Royaume-Uni</strong><small>Disponible</small></div>
+      <button class="opt-btn country-btn" data-val="it">
+        <div><strong>🇮🇹 Italie</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="jp">
+        <div><strong>🇯🇵 Japon</strong><small>Disponible</small></div>
       </button>
       <button class="opt-btn country-btn" data-val="mx">
         <div><strong>🇲🇽 Mexique</strong><small>Disponible</small></div>
       </button>
+      <button class="opt-btn country-btn" data-val="kr">
+        <div><strong>🇰🇷 Corée du Sud</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="es">
+        <div><strong>🇪🇸 Espagne</strong><small>Disponible</small></div>
+      </button>
       <button class="opt-btn country-btn" data-val="tr">
         <div><strong>🇹🇷 Turquie</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="uk">
+        <div><strong>🇬🇧 Royaume-Uni</strong><small>Disponible</small></div>
+      </button>
+      <button class="opt-btn country-btn" data-val="us">
+        <div><strong>🇺🇸 USA</strong><small>Disponible</small></div>
       </button>
     </div>
   </div>
@@ -278,6 +279,6 @@
 <!-- ═══════════════════════════════════════════ TOAST -->
 <div id="toast"></div>
 
-  <script src="app.js?v=20260601-1150"></script>
+  <script src="app.js?v=20260601-1921"></script>
 </body>
 </html>

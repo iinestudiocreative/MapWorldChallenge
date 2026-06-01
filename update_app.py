@@ -1292,7 +1292,10 @@ function updateUITranslations() {
   const countryTitle = document.querySelector("#country-modal .modal-header h3");
   if (countryTitle) countryTitle.textContent = t.countryModal.title;
   
-  document.querySelectorAll("#country-modal .opt-btn").forEach(btn => {
+  const countryOptsContainer = document.querySelector("#country-modal .modal-opts");
+  const countryBtns = Array.from(document.querySelectorAll("#country-modal .opt-btn"));
+  
+  countryBtns.forEach(btn => {
     const key = btn.dataset.val;
     if (key) {
       let label = t.countryModal[key] || key;
@@ -1305,6 +1308,25 @@ function updateUITranslations() {
       btn.removeAttribute("style");
     }
   });
+
+  // Sort alphabetically based on current language translation, keeping "world" first
+  if (countryOptsContainer) {
+    countryBtns.sort((a, b) => {
+      if (a.dataset.val === "world") return -1;
+      if (b.dataset.val === "world") return 1;
+      
+      let labelA = t.countryModal[a.dataset.val] || a.dataset.val;
+      let labelB = t.countryModal[b.dataset.val] || b.dataset.val;
+      
+      const cleanA = labelA.substring(labelA.indexOf(' ') + 1).trim();
+      const cleanB = labelB.substring(labelB.indexOf(' ') + 1).trim();
+      
+      return cleanA.localeCompare(cleanB, state.lang);
+    });
+    
+    // Re-append sorted buttons
+    countryBtns.forEach(btn => countryOptsContainer.appendChild(btn));
+  }
 
   // Country selector button text
   const btnCountry = document.getElementById("btn-country-select");
@@ -1369,8 +1391,7 @@ function loadState() {
     const s = JSON.parse(localStorage.getItem("maplevel_jp_v5") || "{}");
     if (s.username) state.username = s.username;
     if (s.lang) state.lang = s.lang;
-    state.currentMap = s.currentMap || "jp";
-    if (state.currentMap === "world") state.currentMap = "jp";
+    state.currentMap = s.currentMap || "world";
     state.jpLevels = s.jpLevels || s.levels || {};
     state.worldLevels = s.worldLevels || {};
     state.frLevels = s.frLevels || {};
