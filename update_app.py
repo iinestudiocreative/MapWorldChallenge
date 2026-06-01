@@ -3515,7 +3515,7 @@ function setupEvents() {
       floatingBtn.style.transform = "translateX(-50%) scale(1.5)";
     }
     if (domainWatermark) {
-      domainWatermark.style.bottom = "138px";
+      domainWatermark.style.bottom = "142px";
       domainWatermark.style.transform = "scale(1.5)";
     }
     if (header) {

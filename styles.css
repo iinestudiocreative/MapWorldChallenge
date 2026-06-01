@@ -166,7 +166,7 @@ body {
 
 #card-domain-watermark {
   position: absolute;
-  bottom: 115px; /* Raised by 10px to avoid overlap and sit perfectly above the capsule */
+  bottom: 119px; /* Raised by 4px extra to perfectly clear the capsule shadow */
   left: 0;
   width: 100%;
   text-align: center;
