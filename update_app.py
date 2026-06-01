@@ -691,6 +691,7 @@ const UI_TRANSLATIONS = {
     },
     langModalTitle: "Choose language",
     tapName: "👉 Tap your name",
+    suggestBanner: "Have another country in mind? Suggest it via DM!",
     bgWatermark: "JAPAN",
     bgWatermarkWorld: "WORLD",
     bgWatermarkFrance: "FRANCE",
@@ -770,6 +771,7 @@ const UI_TRANSLATIONS = {
     },
     langModalTitle: "言語を選択",
     tapName: "👉 名前を入力",
+    suggestBanner: "他の国を追加してほしい？DMで提案してね！",
     bgWatermark: "日本",
     bgWatermarkWorld: "世界",
     bgWatermarkFrance: "フランス",
@@ -847,6 +849,7 @@ const UI_TRANSLATIONS = {
     },
     langModalTitle: "Choisis ta langue",
     tapName: "👉 Entre ton nom",
+    suggestBanner: "Un autre pays en tête ? Suggère-le en DM !",
     bgWatermark: "JAPON",
     bgWatermarkWorld: "MONDE",
     bgWatermarkFrance: "FRANCE",
@@ -924,6 +927,7 @@ const UI_TRANSLATIONS = {
     },
     langModalTitle: "Elige tu idioma",
     tapName: "👉 Escribe tu nombre",
+    suggestBanner: "¿Tienes otro país en mente? ¡Sugiérelo por DM!",
     bgWatermark: "JAPÓN",
     bgWatermarkWorld: "MUNDO",
     bgWatermarkFrance: "FRANCIA",
@@ -999,6 +1003,7 @@ const UI_TRANSLATIONS = {
     },
     langModalTitle: "언어 선택",
     tapName: "👉 이름을 입력하세요",
+    suggestBanner: "다른 나라가 떠오르나요? DM으로 제안해주세요!",
     bgWatermark: "일본",
     bgWatermarkWorld: "세계",
     bgWatermarkFrance: "프랑스",
@@ -1076,6 +1081,7 @@ const UI_TRANSLATIONS = {
     },
     langModalTitle: "选择语言",
     tapName: "👉 输入你的名字",
+    suggestBanner: "想到其他国家了吗？通过DM建议吧！",
     bgWatermark: "日本",
     bgWatermarkWorld: "世界",
     bgWatermarkFrance: "法国",
@@ -1155,6 +1161,7 @@ const UI_TRANSLATIONS = {
     },
     langModalTitle: "भाषा चुनें",
     tapName: "👉 अपना नाम लिखें",
+    suggestBanner: "कोई और देश? DM में सुझाव दें!",
     bgWatermark: "जापान",
     bgWatermarkWorld: "दुनिया",
     bgWatermarkFrance: "फ्रांस",
@@ -1346,6 +1353,12 @@ function updateUITranslations() {
     const tutoClose = document.getElementById("btn-tuto-close");
     if (tutoClose) tutoClose.textContent = tuto.closeBtn;
   }
+
+  // Suggest Banner translation
+  const suggestCountry = document.getElementById("suggest-banner-country");
+  if (suggestCountry) suggestCountry.textContent = t.suggestBanner;
+  const suggestTutorial = document.getElementById("suggest-banner-tutorial");
+  if (suggestTutorial) suggestTutorial.textContent = t.suggestBanner;
   
   updateHeader();
 }
